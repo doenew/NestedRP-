@@ -50,7 +50,7 @@ NestedRP=function(nv,ts,T=200,ifparallel=TRUE)
 
         # Update point
         update <- 1/mean(1/normxy)*(colMeans(ts/normxy)+ final_avg)
-        
+        as.numeric(update)  # 返回一个向量
       }
       Pnnew <- as.matrix(Pnnew_list)  
     } else {
@@ -74,7 +74,7 @@ NestedRP=function(nv,ts,T=200,ifparallel=TRUE)
         final_avg <- total_avg / length(niv)
         
         # Update point
-        update <- 1/mean(1/normxy)*(colMeans(ts/normxy)+ final_avg)
+        Pnnew[i,] <- 1/mean(1/normxy)*(colMeans(ts/normxy)+ final_avg)
       }
     }
     Pn <- Pnnew 
@@ -92,7 +92,7 @@ NestedRP=function(nv,ts,T=200,ifparallel=TRUE)
 
 
 library(randtoolbox)
-nv=c(10,20,30)
+nv=c(5,10,20)
  D=NestedRP(nv = nv,ts=sobol(100000,2,scrambling = 3),T = 200,ifparallel = T)
  #layer1
  
@@ -109,7 +109,8 @@ plot(Dseq3[1:nv[1],],col=D$layer[1:nv[1]],pch=D$layer[1:nv[1]]+15,cex=2,xlim=c(0
 points(Dseq3[(nv[1]+1):nv[2],],col=D$layer[(nv[1]+1):nv[2]],pch=D$layer[(nv[1]+1):nv[2]]+15,cex=2)
 points(Dseq3[(nv[2]+1):nv[3],],col=D$layer[(nv[2]+1):nv[3]],pch=D$layer[(nv[2]+1):nv[3]]+15,cex=2)
 
-
+min(dist(D$PnK))
+min(dist(Dseq3))
 
 
 
